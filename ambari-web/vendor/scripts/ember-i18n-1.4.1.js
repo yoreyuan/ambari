@@ -21,6 +21,7 @@ THE SOFTWARE.
 */
 (function(window) {
   var I18n, assert, findTemplate, get, set, isBinding, lookupKey, pluralForm;
+  var locale = "zh";
 
   get = Ember.Handlebars.get || Ember.Handlebars.getPath || Ember.getPath;
   set = Ember.set;
@@ -50,17 +51,17 @@ THE SOFTWARE.
 
   findTemplate = function(key, setOnMissing) {
     assert("You must provide a translation key string, not %@".fmt(key), typeof key === 'string');
-    var result = lookupKey(key, I18n.translations);
+    var result = lookupKey(key, I18n.translations[locale]);
 
     if (setOnMissing) {
       if (result == null) {
-        result = I18n.translations[key] = I18n.compile("Missing translation: " + key);
+        result = I18n.translations[locale][key] = I18n.compile("Missing translation: " + key);
         warn("Missing translation: " + key);
       }
     }
 
     if ((result != null) && !jQuery.isFunction(result)) {
-      result = I18n.translations[key] = I18n.compile(result);
+      result = I18n.translations[locale][key] = I18n.compile(result);
     }
 
     return result;
@@ -81,7 +82,10 @@ THE SOFTWARE.
   I18n = {
     compile: Handlebars.compile,
 
-    translations: {},
+    translations: {
+      en: {},
+      zh: {}
+    },
 
     template: function(key, count) {
       var interpolatedKey, result, suffix;

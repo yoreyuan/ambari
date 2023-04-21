@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 """
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -32,6 +33,11 @@ from ambari_commons.unicode_tolerant_fs import unicode_walk
 from ambari_commons import subprocess32
 
 from resource_management.core.utils import attr_to_bitmask
+
+# 解决hue安装UnicodeEncodeError报错
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 if os.geteuid() == 0:
   def chown(path, owner, group):

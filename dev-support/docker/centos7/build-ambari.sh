@@ -23,7 +23,7 @@ else
 fi
 
 echo -e "\033[32mCompiling ambari\033[0m"
-docker exec ambari-rpm-build bash -c "mvn clean install rpm:rpm -DskipTests -Drat.skip=true"
+docker exec ambari-rpm-build bash -c "mvn -B clean install rpm:rpm -DskipTests -Drat.skip=true"
 docker stop ambari-rpm-build
 
 echo -e "\033[32mRestarting ambari-server\033[0m"
